@@ -1,83 +1,23 @@
+import { BombPlacer } from "./BombPlacer";
+import { FieldCreator } from "./FieldCreator"
+import { DifficultyFactory } from "./difficultyCalculators/DifficultyFactory";
+
 export class Field {
     private size: number
     private bombsTotal: number
     field: number[][]
 
-    constructor(difficulty: 1 | 2 | 3) {
-        const boardSize = this.calculateFieldSizeBasedOnDifficulty(difficulty)
-        const bombsTotal = this.calculateBombsTotalBasedOnDifficulty(difficulty)
+    //Implement dependency injection
+    constructor(difficulty: number) {
+        const fieldCreator = new FieldCreator();
+        const bombPlacer = new BombPlacer();
+        const difficultyCalculator = new DifficultyFactory().createDifficultyStrategy(difficulty);
 
-        this.size = boardSize
-        this.bombsTotal = bombsTotal
+        this.size = difficultyCalculator.calculateSize()
+        this.bombsTotal = difficultyCalculator.calculateBombs()
 
-        this.field = this.initiateField(boardSize, bombsTotal)
-    }
+        this.field = fieldCreator.createField(this.size);
 
-    private initiateField(size: number, bombs: number): number[][] {
-        let newField: number[][] = this.initiateFieldMatrix(size)
-
-        this.placeBombsInField(newField, bombs)
-
-        return newField
-    }
-
-    private initiateFieldMatrix(size: number){
-        let matrix: number[][] = []
-
-        for(let i = 0; i < size; i++) {
-            matrix[i] = []
-
-            for(let j = 0; j < size; j++) {
-                matrix[i][j] = 0
-            }
-        }
-
-        return matrix
-    }
-
-    private placeBombsInField(field: number[][], bombs: number){
-        for(let i = 0; i < bombs; i++) {
-            let xPosition = Math.floor(Math.random() * field[0].length)
-            let yPosition = Math.floor(Math.random() * field[0].length)
-
-            while(field[yPosition][xPosition] === -1){
-                xPosition = Math.floor(Math.random() * field[0].length)
-                yPosition = Math.floor(Math.random() * field[0].length)
-            }
-
-            field[yPosition][xPosition] = -1
-        }
-    }
-
-    private calculateFieldSizeBasedOnDifficulty(difficulty: 1 | 2 | 3) {
-        switch(difficulty) {
-            case 1: {
-                return 10
-            }
-
-            case 2: {
-                return 20
-            }
-
-            case 3: {
-                return 30
-            }
-        }
-    }
-
-    private calculateBombsTotalBasedOnDifficulty(difficulty: 1 | 2 | 3) {
-        switch(difficulty) {
-            case 1: {
-                return 20
-            }
-
-            case 2: {
-                return 60
-            }
-
-            case 3: {
-                return 100
-            }
-        }
+        bombPlacer.placeBombsInField(this.field, this.bombsTotal)
     }
 }
