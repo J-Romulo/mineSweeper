@@ -6,7 +6,7 @@ export class EasyDifficultyCalculator implements IDifficultyCalculator {
     }
   
     calculateBombs(): number {
-      return 20;
+      return 15;
     }
 }
   
