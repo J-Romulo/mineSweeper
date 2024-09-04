@@ -1,3 +1,4 @@
+import { AdjacentBombsChecker } from "./AdjacentBombsChecker";
 import { BombPlacer } from "./BombPlacer";
 import { FieldCreator } from "./FieldCreator"
 import { DifficultyFactory } from "./difficultyCalculators/DifficultyFactory";
@@ -23,6 +24,8 @@ export class Field implements IField {
     }
 
     selectPoint(x: number, y: number) {
+        const adjacentBombsChecker = new AdjacentBombsChecker(this.field)
+
         const pointSelected = this.field[y][x]
 
         if(pointSelected === -1) {
@@ -30,37 +33,8 @@ export class Field implements IField {
             return false
         }
 
-        this.checkAdjacentBombs(x, y)
+        adjacentBombsChecker.checkAdjacentArea(x, y)
 
         return true
-    }
-
-    checkAdjacentBombs(x: number, y: number){
-        let totalBombsAdjacent = 0
-        let originalX = x
-        let originalY = y
-        for(y = originalY - 1; y < originalY + 2; y++){
-            for(x = originalX - 1; x < originalX + 2; x++){
-                if((y >= 0 && y < this.size) && (x >= 0 && x < this.size)){
-                    if(this.field[y][x] === -1) totalBombsAdjacent++
-                }
-            }
-        }
-
-        this.field[originalY][originalX] = totalBombsAdjacent === 0 ? -2 : totalBombsAdjacent
-
-        if(totalBombsAdjacent === 0){
-            for(y = originalY - 1; y < originalY + 2; y++){
-                for(x = originalX - 1; x < originalX + 2; x++){
-                    if((y >= 0 && y < this.size) && (x >= 0 && x < this.size)){
-                        if((x !== originalX || y !== originalY) && this.field[y][x] === 0){
-                            this.checkAdjacentBombs(x, y)
-                        }
-                    }
-                }
-            }
-        }
-
-        return totalBombsAdjacent
     }
 }
