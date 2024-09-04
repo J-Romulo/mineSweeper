@@ -1,21 +1,16 @@
-import { ConsoleInterface } from "./infra/UserInterface/ConsoleInterface"
+import { ConsoleInterface } from "./application/UserInterface/Console/ConsoleInterface"
 import { Field } from "./modules/field/Field"
+import { GameController } from "./services/GameController"
+import { UserInputs } from "./services/UserInputs"
 
 class Main {
     execute() {
         const userInterface: IUserInterface = new ConsoleInterface()
+        const gameController = new GameController(userInterface)
 
-        let mainMenuSelection = userInterface.mainMenu()
+        const gameField = gameController.startGame()
 
-        if(mainMenuSelection === 2)         process.exit(1)
-
-        console.clear()
-
-        const difficultyLevel = userInterface.getDifficultyLevel()
-
-        const gameField = new Field(difficultyLevel)
-
-        console.log(gameField.field)
+        gameController.mainLoop(gameField)
     }
 }
 
