@@ -3,6 +3,7 @@ import { BombPlacer } from "./BombPlacer";
 import { FieldCreator } from "./FieldCreator"
 import { DifficultyFactory } from "./difficultyCalculators/DifficultyFactory";
 import { IField } from "./interfaces/IField";
+import { SpaceValues } from "./utilities/SpaceValues";
 
 export class Field implements IField {
     private size: number
@@ -28,8 +29,8 @@ export class Field implements IField {
 
         const pointSelected = this.field[y][x]
 
-        if(pointSelected === -1) {
-            this.field[y][x] = -10
+        if(pointSelected === SpaceValues.Unrevealed_bomb) {
+            this.field[y][x] = SpaceValues.Revealed_bomb
             return false
         }
 
