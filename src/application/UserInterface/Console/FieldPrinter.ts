@@ -21,21 +21,26 @@ export class FieldPrinter {
         for (let i = 0; i < field.length; i++) {
             let rowToPrint = i < 10 ? ` ${i} │` : `${i} │`;
             for (let j = 0; j < field[0].length; j++) {
-                if (field[i][j] === -1) { // Bomba não revelada
-                    rowToPrint += ' \x1b[34m?\x1b[0m '; 
-                }else if (field[i][j] === -10) { // Bomba revelada
-                    rowToPrint += ' \x1b[31mX\x1b[0m '; 
-                } else if (field[i][j] === 0) { // Espaço não revelado
-                    rowToPrint += ' \x1b[34m?\x1b[0m '; 
-                } else if (field[i][j] === -2) {
-                    rowToPrint += '   '; // Espaço revelado
-                } else {
-                    rowToPrint += ` ${field[i][j]} `
-                }
+                rowToPrint += this.getValueToPrint(field[i][j])
                 rowToPrint += ' ';
             }
             rowToPrint += '│';
             console.log(rowToPrint);
+        }
+    }
+
+    getValueToPrint(value: number){
+        switch (value) {
+            case -1: // Unrevealed bomb
+                return ' \x1b[34m?\x1b[0m ';
+            case -10: // Revealed bomb
+                return ' \x1b[31mX\x1b[0m ';
+            case 0: // Unrevealed space
+                return ' \x1b[34m?\x1b[0m ';
+            case -2: // Revealed space
+                return '   ';
+            default:
+                return ` ${value} `;
         }
     }
 }
