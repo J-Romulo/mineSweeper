@@ -1,10 +1,10 @@
 export class FieldPrinter {
-    field(field: number[][]) {
+    field(field: number[][], reveal = false) {
         this.columnsCoordinatesRow(field[0])
 
         console.log('   ┌' + '─'.repeat(field[0].length * 4) + '┐');
 
-        this.fieldRows(field)
+        this.fieldRows(field, reveal)
 
         console.log('   └' + '─'.repeat(field[0].length * 4) + '┘');
     }
@@ -17,11 +17,11 @@ export class FieldPrinter {
         console.log('   ', ...columnsIndexes);
     }
 
-    fieldRows(field: number[][]){
+    fieldRows(field: number[][], reveal = false){
         for (let i = 0; i < field.length; i++) {
             let rowToPrint = i < 10 ? ` ${i} │` : `${i} │`;
             for (let j = 0; j < field[0].length; j++) {
-                rowToPrint += this.getValueToPrint(field[i][j])
+                rowToPrint += this.getValueToPrint(field[i][j], reveal)
                 rowToPrint += ' ';
             }
             rowToPrint += '│';
@@ -29,10 +29,10 @@ export class FieldPrinter {
         }
     }
 
-    getValueToPrint(value: number){
+    getValueToPrint(value: number, reveal = false){
         switch (value) {
             case -1: // Unrevealed bomb
-                return ' \x1b[34m?\x1b[0m ';
+                return reveal ?  ' \x1b[31mX\x1b[0m ' : ' \x1b[34m?\x1b[0m ';
             case -10: // Revealed bomb
                 return ' \x1b[31mX\x1b[0m ';
             case 0: // Unrevealed space

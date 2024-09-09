@@ -35,6 +35,10 @@ export class GameController {
             selectionResult = field.selectPoint(x, y)
         }
 
-        this.userInterface.field(field.field)
+        this.userInterface.finalField(field.field)
+
+        const gameField = this.startGame()
+
+        this.mainLoop(gameField)
     }
 }

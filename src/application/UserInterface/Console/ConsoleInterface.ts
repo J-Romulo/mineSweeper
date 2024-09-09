@@ -2,7 +2,8 @@ import { FieldPrinter } from './FieldPrinter';
 
 export class ConsoleInterface implements IUserInterface {
     mainMenu() {
-        console.log(`=== Menu Principal ===
+        console.log(`
+=== Menu Principal ===
 1. Jogar 
 2. Sair`)
     }
@@ -18,5 +19,11 @@ export class ConsoleInterface implements IUserInterface {
         const fieldPrinter = new FieldPrinter()
 
         fieldPrinter.field(field)
+    }
+
+    finalField(field: number[][]) {
+        const fieldPrinter = new FieldPrinter()
+
+        fieldPrinter.field(field, true)
     }
 }
