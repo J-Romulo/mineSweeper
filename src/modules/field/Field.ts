@@ -25,6 +25,10 @@ export class Field implements IField {
     }
 
     selectPoint(x: number, y: number) {
+        if (!this.isValidCoordinate(x, y)) {
+            return true;
+        }
+
         const adjacentBombsChecker = new AdjacentBombsChecker(this.field)
 
         const pointSelected = this.field[y][x]
@@ -37,5 +41,9 @@ export class Field implements IField {
         adjacentBombsChecker.checkAdjacentArea(x, y)
 
         return true
+    }
+
+    private isValidCoordinate(x: number, y: number): boolean {
+        return x >= 0 && x < this.size && y >= 0 && y < this.size;
     }
 }
