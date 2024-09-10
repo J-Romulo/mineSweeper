@@ -1,7 +1,7 @@
 import { ConsoleInterface } from "./application/UserInterface/Console/ConsoleInterface"
-import { Field } from "./modules/field/Field"
+import { GraphicsInterface } from "./application/UserInterface/Graphics/GraphicsInterface"
+import { IUserInterface } from "./application/UserInterface/IUserInterface"
 import { GameController } from "./services/GameController"
-import { UserInputs } from "./services/UserInputs"
 
 class Main {
     execute() {
