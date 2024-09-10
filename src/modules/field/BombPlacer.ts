@@ -1,15 +1,13 @@
-import { SpaceValues } from "./utilities/SpaceValues"
+import { Cell } from "../cell/Cell"
 
 export class BombPlacer {
-    placeBombsInField(field: number[][], bombs: number){
+    placeBombsInField(field: Cell[][], bombs: number){
         for(let i = 0; i < bombs; i++) {
             let { xPosition, yPosition } = this.getRandomCoordinates(field[0].length)
 
-            while(field[yPosition][xPosition] === SpaceValues.Unrevealed_bomb){
+            while(!field[yPosition][xPosition].placeBomb()){
                 ({ xPosition, yPosition } = this.getRandomCoordinates(field[0].length))
             }
-
-            field[yPosition][xPosition] = SpaceValues.Unrevealed_bomb
         }
     }
 

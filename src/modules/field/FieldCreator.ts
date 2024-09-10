@@ -1,11 +1,14 @@
-import { SpaceValues } from "./utilities/SpaceValues";
+import { Cell } from "../cell/Cell";
 
 export class FieldCreator {
-    createField(size: number): number[][] {
-        const field: number[][] = [];
+    createField(size: number): Cell[][] {
+        const field: Cell[][] = [];
     
         for (let i = 0; i < size; i++) {
-          field[i] = new Array(size).fill(SpaceValues.Unrevealed_space);
+          field[i] = [];
+          for (let j = 0; j < size; j++) {
+              field[i][j] = new Cell();
+          }
         }
     
         return field;

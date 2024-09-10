@@ -1,3 +1,5 @@
+import { Cell } from '../../../modules/cell/Cell';
+import { IUserInterface } from '../IUserInterface';
 import { FieldPrinter } from './FieldPrinter';
 
 export class ConsoleInterface implements IUserInterface {
@@ -15,13 +17,13 @@ export class ConsoleInterface implements IUserInterface {
 3. Difícil`)
     }
 
-    field(field: number[][]) {
+    field(field: Cell[][]) {
         const fieldPrinter = new FieldPrinter()
 
         fieldPrinter.field(field)
     }
 
-    finalField(field: number[][]) {
+    finalField(field: Cell[][]) {
         const fieldPrinter = new FieldPrinter()
 
         fieldPrinter.field(field, true)

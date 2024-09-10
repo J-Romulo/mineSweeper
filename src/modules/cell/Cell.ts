@@ -1,0 +1,53 @@
+import { CellContent } from "./cellContent/CellContent"
+
+export class Cell {
+    private hidden: boolean;
+    private content: CellContent;
+
+    constructor() {
+        this.hidden = true;
+        this.content = new CellContent();
+    }
+
+    placeBomb(): boolean {
+        if (this.content.hasBomb()) return false;
+
+        this.content.activateBomb();
+        return true;
+    }
+
+    revealCell(): boolean {
+        if (this.content.hasBomb()) return false;
+
+        this.hidden = false;
+        return true;
+    }
+
+    checkRevealedEmptySpace(): boolean {
+        return !this.hidden && !this.content.hasBomb() && !this.getAdjacentBombs();
+    }
+
+    checkUnrevealedEmptySpace(): boolean {
+        return this.hidden && !this.content.hasBomb() && !this.getAdjacentBombs();
+    }
+
+    checkRevealedBomb(): boolean {
+        return !this.hidden && this.content.hasBomb();
+    }
+
+    checkUnrevealedBomb(): boolean {
+        return this.hidden && this.content.hasBomb();
+    }
+
+    checkFlag(): boolean {
+        return this.hidden && this.content.hasFlag();
+    }
+
+    getAdjacentBombs(): number {
+        return this.content.getAdjacentBombs();
+    }
+
+    setAdjacentBombs(bombsAdjacent: number) {
+        this.content.setAdjacentBombs(bombsAdjacent)
+    }
+}

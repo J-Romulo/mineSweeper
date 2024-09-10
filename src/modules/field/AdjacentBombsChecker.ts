@@ -1,7 +1,9 @@
-export class AdjacentBombsChecker {
-    private fieldToCheck: number[][]
+import { Cell } from "../cell/Cell"
 
-    constructor(field: number[][]){
+export class AdjacentBombsChecker {
+    private fieldToCheck: Cell[][]
+
+    constructor(field: Cell[][]){
         this.fieldToCheck = field
     }
 
@@ -20,11 +22,12 @@ export class AdjacentBombsChecker {
 
         for(let y = originalY - 1; y < originalY + 2; y++){
             for(let x = originalX - 1; x < originalX + 2; x++){
-                if (this.isWithinBounds(x, y) && this.fieldToCheck[y][x] === -1) totalBombsAdjacent++
+                if (this.isWithinBounds(x, y) && this.fieldToCheck[y][x].checkUnrevealedBomb()) totalBombsAdjacent++
             }
         }
 
-        this.fieldToCheck[originalY][originalX] = totalBombsAdjacent === 0 ? -2 : totalBombsAdjacent
+        this.fieldToCheck[originalY][originalX].setAdjacentBombs(totalBombsAdjacent)
+        this.fieldToCheck[originalY][originalX].revealCell()
 
         return totalBombsAdjacent
     }
@@ -35,7 +38,7 @@ export class AdjacentBombsChecker {
 
         for(y = originalY - 1; y < originalY + 2; y++){
             for(x = originalX - 1; x < originalX + 2; x++){
-                if(this.isWithinBounds(x, y) && (x !== originalX || y !== originalY) && this.fieldToCheck[y][x] === 0){
+                if(this.isWithinBounds(x, y) && (x !== originalX || y !== originalY) && this.fieldToCheck[y][x].checkUnrevealedEmptySpace()){
                     this.checkAdjacentArea(x, y)
                 }
             }
