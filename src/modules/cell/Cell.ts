@@ -17,9 +17,11 @@ export class Cell {
     }
 
     revealCell(): boolean {
-        if (this.content.hasBomb()) return false;
-
         this.hidden = false;
+        if (this.content.hasBomb()){
+            return false;
+        }
+
         return true;
     }
 
@@ -37,6 +39,10 @@ export class Cell {
 
     checkUnrevealedBomb(): boolean {
         return this.hidden && this.content.hasBomb();
+    }
+
+    setFlag() {
+        return this.hidden && this.content.addFlag();
     }
 
     checkFlag(): boolean {

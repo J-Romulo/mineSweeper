@@ -5,4 +5,5 @@ export interface IUserInterface {
     difficultyLevel: () => void;
     field: (field: Cell[][]) => void
     finalField: (field: Cell[][]) => void
+    playOptions: () => void
 }

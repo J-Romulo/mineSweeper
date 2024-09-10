@@ -28,4 +28,10 @@ export class UserInputs {
             y: Number(rowSelected)
         }
     }
+
+    playOptions() {
+        const optionSelected = this.prompt(`>> `)
+
+        return Number(optionSelected) as 1 | 2
+    }
 }

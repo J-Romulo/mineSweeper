@@ -41,6 +41,31 @@ export class Field implements IField {
         return true
     }
 
+    positionFlag(x: number, y: number) {
+        const pointSelected = this.field[y][x]
+
+        pointSelected.setFlag()
+
+        return true
+    }
+
+    checkEndGame() {
+        let unrevealedSpaces = 0
+
+        this.field.forEach((row) => {
+            row.forEach((cell) => {
+                if(cell.checkRevealedBomb()) return true
+                if(cell.checkUnrevealedBomb() || cell.checkUnrevealedEmptySpace()) unrevealedSpaces++
+            })
+        })
+
+        if(unrevealedSpaces === this.bombsTotal){
+            return true
+        } 
+        
+        return false
+    }
+
     private isValidCoordinate(x: number, y: number): boolean {
         return x >= 0 && x < this.size && y >= 0 && y < this.size;
     }

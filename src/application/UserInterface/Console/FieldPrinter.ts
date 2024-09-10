@@ -1,5 +1,7 @@
+import { Cell } from "../../../modules/cell/Cell";
+
 export class FieldPrinter {
-    field(field: number[][], reveal = false) {
+    field(field: Cell[][], reveal = false) {
         this.columnsCoordinatesRow(field[0])
 
         console.log('   ┌' + '─'.repeat(field[0].length * 4) + '┐');
@@ -9,7 +11,7 @@ export class FieldPrinter {
         console.log('   └' + '─'.repeat(field[0].length * 4) + '┘');
     }
 
-    columnsCoordinatesRow(columns: number[]) {
+    columnsCoordinatesRow(columns: Cell[]) {
         const columnsIndexes = columns.map((value, index) => {
             return index < 10 ? ` ${index} ` : ` ${index}`
         })
@@ -17,7 +19,7 @@ export class FieldPrinter {
         console.log('   ', ...columnsIndexes);
     }
 
-    fieldRows(field: number[][], reveal = false){
+    fieldRows(field: Cell[][], reveal = false){
         for (let i = 0; i < field.length; i++) {
             let rowToPrint = i < 10 ? ` ${i} │` : `${i} │`;
             for (let j = 0; j < field[0].length; j++) {
@@ -29,18 +31,19 @@ export class FieldPrinter {
         }
     }
 
-    getValueToPrint(value: number, reveal = false){
-        switch (value) {
-            case -1: // Unrevealed bomb
-                return reveal ?  ' \x1b[31mX\x1b[0m ' : ' \x1b[34m?\x1b[0m ';
-            case -10: // Revealed bomb
-                return ' \x1b[31mX\x1b[0m ';
-            case 0: // Unrevealed space
-                return ' \x1b[34m?\x1b[0m ';
-            case -2: // Revealed space
-                return '   ';
-            default:
-                return ` ${value} `;
+    getValueToPrint(value: Cell, reveal = false){
+        if (value.checkFlag()) {
+            return ` \x1b[32mF\x1b[0m `;
+        } else if (value.checkUnrevealedEmptySpace()) {
+            return ' \x1b[34m?\x1b[0m ';
+        } else if (value.checkRevealedEmptySpace()) {
+            return '   ';
+        } else if (value.checkUnrevealedBomb()) {
+            return reveal ?  ' \x1b[31mX\x1b[0m ' : ' \x1b[34m?\x1b[0m ';
+        } else if (value.checkRevealedBomb()) {
+            return ' \x1b[31mX\x1b[0m ';
+        } else {
+            return ` ${value.getAdjacentBombs()} `
         }
     }
 }

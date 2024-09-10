@@ -28,4 +28,11 @@ export class ConsoleInterface implements IUserInterface {
 
         fieldPrinter.field(field, true)
     }
+
+    playOptions() {
+        console.log(`
+=== Próxima jogada ===
+1. Jogada padrão 
+2. Posicionar bandeira`)
+    }
 }

@@ -1,3 +1,4 @@
+import { IUserInterface } from "../application/UserInterface/IUserInterface"
 import { Field } from "../modules/field/Field"
 import { UserInputs } from "./UserInputs"
 
@@ -25,14 +26,24 @@ export class GameController {
     }
 
     mainLoop(field: Field) {
+        let endGame = false
         let selectionResult = true
 
-        while(selectionResult){
+        while(selectionResult && !endGame){
             this.userInterface.field(field.field)
             
+            this.userInterface.playOptions()
+            const optionsSelected = this.userOperations.playOptions()
+
             const {x, y} = this.userOperations.fieldCoordinates()
-    
-            selectionResult = field.selectPoint(x, y)
+
+            if(optionsSelected === 1){
+                selectionResult = field.selectPoint(x, y)
+            }else{
+                field.positionFlag(x, y)
+            }
+
+            endGame = field.checkEndGame()
         }
 
         this.userInterface.finalField(field.field)
