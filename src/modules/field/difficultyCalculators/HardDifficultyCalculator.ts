@@ -9,4 +9,3 @@ export class HardDifficultyCalculator implements IDifficultyCalculator {
       return 100;
     }
 }
-  

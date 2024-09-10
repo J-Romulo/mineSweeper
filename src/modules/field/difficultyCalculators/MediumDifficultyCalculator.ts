@@ -9,4 +9,3 @@ export class MediumDifficultyCalculator implements IDifficultyCalculator {
       return 40;
     }
 }
-  
