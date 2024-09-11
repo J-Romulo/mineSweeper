@@ -1,9 +1,9 @@
 import fs from 'fs'
 import path from 'node:path'
 
-import { IRepository } from "../IRepository";
+import { IPersistence } from "../interfaces/IPersistence";
 
-export class FilePersistense implements IRepository {
+export class FilePersistense implements IPersistence {
     saveData(data: string, key: string) {
         try {
             const dataRetrieved = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', '..', 'DB', 'db.json'), 'utf8'));

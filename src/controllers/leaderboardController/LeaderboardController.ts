@@ -1,20 +1,19 @@
-import { IRepository } from "../../application/Repository/IRepository";
+import { IRepository } from "../../application/persistence/interfaces/IRepository";
 import { IUserInterface } from "../../application/UserInterface/IUserInterface";
 import { PersonalRecord } from "../../data/personalRecord/PersonalRecord";
-import { PersonalRecordRepository } from "../../data/personalRecord/repository/PersonalRecordRepository";
 import { ILeaderboardController } from "./ILeaderboardController";
 
 export class LeaderboardController implements ILeaderboardController {
-    private personalRecordRepository: PersonalRecordRepository
+    private personalRecordRepository: IRepository<PersonalRecord>
     private userInterface: IUserInterface
 
-    constructor(database: IRepository, userInterface: IUserInterface,){
+    constructor(userInterface: IUserInterface, personalRecordRepository: IRepository<PersonalRecord>){
         this.userInterface = userInterface
-        this.personalRecordRepository = new PersonalRecordRepository(database)
+        this.personalRecordRepository = personalRecordRepository
     }
 
     showLeaderboards(){
-        const retrievedRecords = this.personalRecordRepository.retrieveRecords()
+        const retrievedRecords = this.personalRecordRepository.retrieveAll()
 
         let leaderboardEasy: any[] = []
         let leaderboardMedium: any[] = []
@@ -26,9 +25,9 @@ export class LeaderboardController implements ILeaderboardController {
             else leaderboardHard.push(element)
         });
 
-        leaderboardEasy.sort((a, b) => a.round - b.rounds)
-        leaderboardMedium.sort((a, b) => a.round - b.rounds)
-        leaderboardHard.sort((a, b) => a.round - b.rounds)
+        leaderboardEasy.sort((a, b) => a.rounds - b.rounds)
+        leaderboardMedium.sort((a, b) => a.rounds - b.rounds)
+        leaderboardHard.sort((a, b) => a.rounds - b.rounds)
 
         console.log('')
         if(leaderboardEasy.length) this.userInterface.displayLeaderboard(leaderboardEasy)
