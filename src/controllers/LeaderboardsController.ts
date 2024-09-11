@@ -1,7 +1,7 @@
-import { IRepository } from "../../application/Repository/IRepository";
-import { IUserInterface } from "../../application/UserInterface/IUserInterface";
-import { PersonalRecord } from "../../modules/personalRecord/PersonalRecord";
-import { PersonalRecordRepository } from "../../modules/personalRecord/repository/PersonalRecordRepository";
+import { IRepository } from "../application/Repository/IRepository";
+import { IUserInterface } from "../application/UserInterface/IUserInterface";
+import { PersonalRecord } from "../data/personalRecord/PersonalRecord";
+import { PersonalRecordRepository } from "../data/personalRecord/repository/PersonalRecordRepository";
 
 export class LeaderboardsController {
     private personalRecordRepository: PersonalRecordRepository

@@ -1,5 +1,5 @@
 import { QMainWindow } from "@nodegui/nodegui";
-import { Cell } from "../../../modules/cell/Cell";
+import { Cell } from "../../../data/cell/Cell";
 import { IUserInterface } from "../IUserInterface";
 
 export class GraphicsInterface implements IUserInterface {

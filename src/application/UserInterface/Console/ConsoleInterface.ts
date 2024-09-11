@@ -1,4 +1,4 @@
-import { Cell } from '../../../modules/cell/Cell';
+import { Cell } from '../../../data/cell/Cell';
 import { IUserInterface } from '../IUserInterface';
 import { FieldPrinter } from './FieldPrinter';
 import { LeaderboardsPrinter } from './LeaderboardsPrinter';

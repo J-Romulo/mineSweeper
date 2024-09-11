@@ -1,4 +1,4 @@
-import { Cell } from "../../../modules/cell/Cell";
+import { Cell } from "../../../data/cell/Cell";
 
 export class FieldPrinter {
     field(field: Cell[][], reveal = false) {
