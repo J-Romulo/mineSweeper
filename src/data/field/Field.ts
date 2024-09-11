@@ -24,44 +24,43 @@ export class Field implements IField {
 
     selectPoint(x: number, y: number) {
         if (!this.isValidCoordinate(x, y)) {
-            return true;
+            return;
         }
 
         const adjacentBombsChecker = new AdjacentBombsChecker(this.field)
 
         const pointSelected = this.field[y][x]
 
-        const emptyCellRevealed = pointSelected.revealCell()
-        if(!emptyCellRevealed) return false
+        pointSelected.revealCell()
 
         adjacentBombsChecker.checkAdjacentArea(x, y)
-
-        return true
     }
 
     positionFlag(x: number, y: number) {
         const pointSelected = this.field[y][x]
 
         pointSelected.setFlag()
-
-        return true
     }
 
-    checkEndGame() {
+    checkGameStatus() {
+        let gameStatus = 'ongoing'
+
         let unrevealedSpaces = 0
 
         this.field.forEach((row) => {
             row.forEach((cell) => {
-                if(cell.checkRevealedBomb()) return true
+                if(cell.checkRevealedBomb()) gameStatus = 'defeat'
                 if(cell.checkUnrevealedBomb() || cell.checkUnrevealedEmptySpace()) unrevealedSpaces++
             })
         })
 
+        if(gameStatus === 'defeat') return gameStatus
+
         if(unrevealedSpaces === this.bombsTotal){
-            return true
+            return 'victory'
         } 
         
-        return false
+        return 'ongoing'
     }
 
     private isValidCoordinate(x: number, y: number): boolean {

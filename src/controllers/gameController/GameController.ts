@@ -48,11 +48,10 @@ export class GameController {
     }
 
     mainLoop() {
-        let endGame = false
-        let selectionResult = true
+        let gameStatus: 'ongoing' | 'victory' | 'defeat' = 'ongoing'
         let roundsPlayed = 0
 
-        while(selectionResult && !endGame){
+        while(gameStatus === 'ongoing'){
             this.userInterface.field(this.fieldBeingPlayed!.field)
             
             this.userInterface.playOptions()
@@ -61,28 +60,28 @@ export class GameController {
             const {x, y} = this.userOperations.fieldCoordinates()
 
             if(optionsSelected === 1){
-                selectionResult = this.fieldBeingPlayed!.selectPoint(x, y)
+                this.fieldBeingPlayed!.selectPoint(x, y)
             }else{
                 this.fieldBeingPlayed!.positionFlag(x, y)
             }
 
-            endGame = this.fieldBeingPlayed!.checkEndGame()
+            gameStatus = this.fieldBeingPlayed!.checkGameStatus()
             roundsPlayed++
         }
 
         this.userInterface.finalField(this.fieldBeingPlayed!.field)
 
-        if(endGame){
-            this.manageEndgame(roundsPlayed)
-        }
+        this.manageEndgame(gameStatus, roundsPlayed)
 
         this.startGame()
     }
 
-    manageEndgame(roundsPlayed: number){
-        this.userInterface.getPlayerNickname()
-        const playerNickname = this.userOperations.promptUser('text')
-
-        this.leaderboardsController.saveRecord(String(playerNickname), roundsPlayed, this.difficultyBeingPlayed as 1 | 2 | 3)
+    manageEndgame(endGame: 'ongoing' | 'victory' | 'defeat', roundsPlayed: number){
+        if(endGame === 'victory'){
+            this.userInterface.getPlayerNickname()
+            const playerNickname = this.userOperations.promptUser('text')
+    
+            this.leaderboardsController.saveRecord(String(playerNickname), roundsPlayed, this.difficultyBeingPlayed as 1 | 2 | 3)
+        }
     }
 }

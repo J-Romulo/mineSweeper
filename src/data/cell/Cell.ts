@@ -16,13 +16,8 @@ export class Cell {
         return true;
     }
 
-    revealCell(): boolean {
+    revealCell() {
         this.hidden = false;
-        if (this.content.hasBomb()){
-            return false;
-        }
-
-        return true;
     }
 
     checkRevealedEmptySpace(): boolean {
