@@ -1,7 +1,7 @@
 import { Cell } from "../cell/Cell";
 import { AdjacentBombsChecker } from "./AdjacentBombsChecker";
-import { BombPlacer } from "./BombPlacer";
-import { FieldCreator } from "./FieldCreator"
+import { BombPlacer } from "./helpers/BombPlacer";
+import { FieldCreator } from "./helpers/FieldCreator"
 import { DifficultyFactory } from "./difficultyCalculators/DifficultyFactory";
 import { IField } from "./interfaces/IField";
 
@@ -12,16 +12,14 @@ export class Field implements IField {
 
     //Implement dependency injection
     constructor(difficulty: number) {
-        const fieldCreator = new FieldCreator();
-        const bombPlacer = new BombPlacer();
         const difficultyCalculator = new DifficultyFactory().createDifficultyStrategy(difficulty);
 
         this.size = difficultyCalculator.calculateSize()
         this.bombsTotal = difficultyCalculator.calculateBombs()
 
-        this.field = fieldCreator.createField(this.size);
+        this.field = FieldCreator.createField(this.size);
 
-        bombPlacer.placeBombsInField(this.field, this.bombsTotal)
+        BombPlacer.placeBombsInField(this.field, this.bombsTotal)
     }
 
     selectPoint(x: number, y: number) {

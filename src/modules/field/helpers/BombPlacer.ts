@@ -1,7 +1,7 @@
-import { Cell } from "../cell/Cell"
+import { Cell } from "../../cell/Cell"
 
 export class BombPlacer {
-    placeBombsInField(field: Cell[][], bombs: number){
+    static placeBombsInField(field: Cell[][], bombs: number){
         for(let i = 0; i < bombs; i++) {
             let { xPosition, yPosition } = this.getRandomCoordinates(field[0].length)
 
@@ -11,7 +11,7 @@ export class BombPlacer {
         }
     }
 
-    getRandomCoordinates(range: number){
+    static getRandomCoordinates(range: number){
         let xPosition = Math.floor(Math.random() * range)
         let yPosition = Math.floor(Math.random() * range)
 

@@ -1,7 +1,7 @@
-import { Cell } from "../cell/Cell";
+import { Cell } from "../../cell/Cell";
 
 export class FieldCreator {
-    createField(size: number): Cell[][] {
+    static createField(size: number): Cell[][] {
         const field: Cell[][] = [];
     
         for (let i = 0; i < size; i++) {
