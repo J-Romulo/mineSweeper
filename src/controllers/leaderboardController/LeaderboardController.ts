@@ -1,9 +1,10 @@
-import { IRepository } from "../application/Repository/IRepository";
-import { IUserInterface } from "../application/UserInterface/IUserInterface";
-import { PersonalRecord } from "../data/personalRecord/PersonalRecord";
-import { PersonalRecordRepository } from "../data/personalRecord/repository/PersonalRecordRepository";
+import { IRepository } from "../../application/Repository/IRepository";
+import { IUserInterface } from "../../application/UserInterface/IUserInterface";
+import { PersonalRecord } from "../../data/personalRecord/PersonalRecord";
+import { PersonalRecordRepository } from "../../data/personalRecord/repository/PersonalRecordRepository";
+import { ILeaderboardController } from "./ILeaderboardController";
 
-export class LeaderboardsController {
+export class LeaderboardController implements ILeaderboardController {
     private personalRecordRepository: PersonalRecordRepository
     private userInterface: IUserInterface
 

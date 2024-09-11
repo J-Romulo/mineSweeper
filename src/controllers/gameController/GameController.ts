@@ -1,19 +1,18 @@
-import { IRepository } from "../application/Repository/IRepository"
-import { IUserInterface } from "../application/UserInterface/IUserInterface"
-import { Field } from "../data/field/Field"
-import { UserInputs } from "../application/UserInputs/UserInputs"
-import { LeaderboardsController } from "./LeaderboardsController"
-import { IUserInputs } from "../application/UserInputs/IUserInputs"
+import { IUserInterface } from "../../application/UserInterface/IUserInterface"
+import { Field } from "../../data/field/Field"
+import { IUserInputs } from "../../application/UserInputs/IUserInputs"
+import { ILeaderboardController } from "../leaderboardController/ILeaderboardController"
 
 export class GameController {
     private userInterface: IUserInterface
     private userOperations: IUserInputs
-    private leaderboardsController: LeaderboardsController
+    private leaderboardsController: ILeaderboardController
+    
     private difficultyBeingPlayed: 1 | 2 | 3 | null = null
     private fieldBeingPlayed: Field | null = null
 
-    constructor(userInterface: IUserInterface, repository: IRepository, userInputs: IUserInputs) {
-        this.leaderboardsController = new LeaderboardsController(repository, userInterface)
+    constructor(userInterface: IUserInterface, userInputs: IUserInputs, leaderboardController: ILeaderboardController) {
+        this.leaderboardsController = leaderboardController
         this.userInterface = userInterface
         this.userOperations = userInputs
     }
