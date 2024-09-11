@@ -6,4 +6,6 @@ export interface IUserInterface {
     field: (field: Cell[][]) => void
     finalField: (field: Cell[][]) => void
     playOptions: () => void
+    getPlayerNickname: () => void
+    displayLeaderboard: (records: any[]) => void
 }
