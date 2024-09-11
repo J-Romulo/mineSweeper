@@ -1,16 +1,17 @@
+import { FilePersistense } from "./application/Repository/FilePersistence/FilePersistence"
+import { IRepository } from "./application/Repository/IRepository"
 import { ConsoleInterface } from "./application/UserInterface/Console/ConsoleInterface"
-import { GraphicsInterface } from "./application/UserInterface/Graphics/GraphicsInterface"
 import { IUserInterface } from "./application/UserInterface/IUserInterface"
-import { GameController } from "./services/GameController"
+import { GameController } from "./services/gameController/GameController"
 
 class Main {
     execute() {
         const userInterface: IUserInterface = new ConsoleInterface()
-        const gameController = new GameController(userInterface)
+        const repository: IRepository = new FilePersistense()
 
-        const gameField = gameController.startGame()
+        const gameController = new GameController(userInterface, repository)
 
-        gameController.mainLoop(gameField)
+        gameController.startGame()
     }
 }
 

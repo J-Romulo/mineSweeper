@@ -34,4 +34,10 @@ export class UserInputs {
 
         return Number(optionSelected) as 1 | 2
     }
+
+    getPlayerNickname() {
+        const nicknameInput = this.prompt(`>> `)
+
+        return nicknameInput
+    }
 }
