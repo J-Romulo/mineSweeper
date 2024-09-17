@@ -10,7 +10,6 @@ export class Field implements IField {
     private bombsTotal: number
     field: Cell[][]
 
-    //Implement dependency injection
     constructor(difficulty: number) {
         const difficultyCalculator = new DifficultyFactory().createDifficultyStrategy(difficulty);
 
