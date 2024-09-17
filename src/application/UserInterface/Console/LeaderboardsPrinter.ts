@@ -5,7 +5,8 @@ export class LeaderboardsPrinter {
         console.log('   Jogador                Rodadas')
 
         records.forEach((record, index) => {
-            console.log(`${index + 1}. ${record.player}                ${record.rounds}`)
-        })
+            const playerName = record.player.padEnd(20); // Adjust the padding length as needed
+            console.log(`${index + 1}. ${playerName}   ${record.rounds}`);
+        });
     }
 }
